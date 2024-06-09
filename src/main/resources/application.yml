@@ -1,19 +1,32 @@
+server:
+  port: 8001
+  error:
+    include-stacktrace: on_param
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    hostname: ms-unir-store
+
 spring:
   application:
-    name: store-core
+    name: ms-unir-store
   datasource:
-    url: jdbc:mariadb://localhost:3306/unir_store
-    username: root
-    password: root
-  flyway:
-    url: jdbc:mariadb://localhost:3306/unir_store
-    user: root
-    password: root
-    enabled: true
-    schemas: unir_store
-    locations: classpath:db/migration/mysql
+    url: jdbc:h2:mem:unir_store;Mode=MySQL
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+#getProducts:
+#  url: http://ms-unir-store-buscador/products/%s
