@@ -44,7 +44,7 @@ public class CategoriesController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         Boolean removed = service.removeCategory(id);
 
         if (!removed) {
