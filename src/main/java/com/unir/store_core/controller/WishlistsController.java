@@ -27,7 +27,7 @@ public class WishlistsController {
         return ResponseEntity.ok(wishlist);
     }
 
-    @PostMapping("/wishlists/product/add")
+    @PostMapping("/wishlists/add/product")
     public ResponseEntity<Wishlist> addProductToWishlist(@RequestBody WishlistRequest request) {
         Wishlist wishlist = service.addProduct(request);
         return ResponseEntity.ok(wishlist);
@@ -50,7 +50,7 @@ public class WishlistsController {
         return ResponseEntity.ok(wishlist);
     }
 
-    @DeleteMapping("/wishlists/product/delete")
+    @DeleteMapping("/wishlists/delete/product")
     public ResponseEntity<Wishlist> deleteProductFromWishlist(@RequestBody WishlistRequest request) {
         Wishlist wishlist = service.removeProduct(request);
         return ResponseEntity.ok(wishlist);
