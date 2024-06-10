@@ -1,5 +1,6 @@
 package com.unir.store_core.model.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.unir.store_core.model.request.ProductRequest;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false, insertable = false, updatable = false)
     private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wishlist_id")
+    @JsonBackReference
+    private Wishlist wishlist;
 
     @Column(name = "category_id")
     private Long categoryId;
