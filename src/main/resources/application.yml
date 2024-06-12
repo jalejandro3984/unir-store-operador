@@ -28,5 +28,8 @@ spring:
       settings:
         web-allow-others: true
 
+jasypt:
+  encryptor:
+    password: this-is-a-secret-key
 #getProducts:
 #  url: http://ms-unir-store-buscador/products/%s
