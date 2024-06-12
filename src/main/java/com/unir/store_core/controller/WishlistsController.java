@@ -50,13 +50,18 @@ public class WishlistsController {
         return ResponseEntity.ok(wishlist);
     }
 
-    @DeleteMapping("/wishlists/delete/product")
+    @DeleteMapping("/wishlists/product/delete")
     public ResponseEntity<Wishlist> deleteProductFromWishlist(@RequestBody WishlistRequest request) {
         Wishlist wishlist = service.removeProduct(request);
+
+        if (null == wishlist) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(wishlist);
     }
 
-    @DeleteMapping("/wishlists/delete/{id}")
+    @DeleteMapping("/wishlists/{id}/delete")
     public ResponseEntity<Void> deleteWishlist(@PathVariable Long id) {
         Boolean removed = service.deleteWishlist(id);
 
