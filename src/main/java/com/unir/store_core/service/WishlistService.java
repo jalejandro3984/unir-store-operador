@@ -6,6 +6,6 @@ import com.unir.store_core.model.request.WishlistRequest;
 public interface WishlistService {
     Wishlist createWishlist(WishlistRequest request);
     Boolean deleteWishlist(Long id);
-    Wishlist addProduct(WishlistRequest request);
-    Wishlist removeProduct(WishlistRequest request);
+    Wishlist addProduct(Long id, WishlistRequest request);
+    Wishlist removeProduct(Long id, WishlistRequest request);
 }

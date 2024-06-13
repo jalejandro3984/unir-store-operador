@@ -1,5 +1,9 @@
 package com.unir.store_core.model.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.unir.store_core.model.dto.UserDto;
 import com.unir.store_core.model.request.UserRequest;
 import jakarta.persistence.*;
@@ -7,6 +11,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,6 +22,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "wishlist_id", referencedColumnName = "id")
+    private Wishlist wishlist;
 
     @Column(name = "username")
     private String username;

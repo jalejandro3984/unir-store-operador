@@ -7,18 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class WishlistRequest {
-    @NotNull(message = "`id` cannot be null")
-    @NotEmpty(message = "`id` cannot be empty")
-    private Long id;
-
     @NotNull(message = "`productId` cannot be null")
     @NotEmpty(message = "`productId` cannot be empty")
     private Long productId;
+
+    @NotNull(message = "`userId` cannot be null")
+    @NotEmpty(message = "`userId` cannot be empty")
+    private Long userId;
 }

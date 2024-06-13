@@ -19,17 +19,14 @@ public class WishlistsController {
     private final WishlistService service;
 
     @PostMapping("/wishlists")
-    public ResponseEntity<Wishlist> createWishlist() {
-        //TODO: Pasar logica al service cuando este relacionado con el usuario, agregar parametro @RequestBody WishlistRequest request
-//        Wishlist wishlist = service.createWishlist(request);
-        Wishlist wishlist = new Wishlist();
-        repository.save(wishlist);
+    public ResponseEntity<Wishlist> createWishlist(@RequestBody WishlistRequest request) {
+        Wishlist wishlist = service.createWishlist(request);
         return ResponseEntity.ok(wishlist);
     }
 
-    @PostMapping("/wishlists/add/product")
-    public ResponseEntity<Wishlist> addProductToWishlist(@RequestBody WishlistRequest request) {
-        Wishlist wishlist = service.addProduct(request);
+    @PostMapping("/wishlists/{id}/product/add")
+    public ResponseEntity<Wishlist> addProductToWishlist(@PathVariable Long id, @RequestBody WishlistRequest request) {
+        Wishlist wishlist = service.addProduct(id, request);
         return ResponseEntity.ok(wishlist);
     }
 
@@ -50,17 +47,6 @@ public class WishlistsController {
         return ResponseEntity.ok(wishlist);
     }
 
-    @DeleteMapping("/wishlists/product/delete")
-    public ResponseEntity<Wishlist> deleteProductFromWishlist(@RequestBody WishlistRequest request) {
-        Wishlist wishlist = service.removeProduct(request);
-
-        if (null == wishlist) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(wishlist);
-    }
-
     @DeleteMapping("/wishlists/{id}/delete")
     public ResponseEntity<Void> deleteWishlist(@PathVariable Long id) {
         Boolean removed = service.deleteWishlist(id);
@@ -70,5 +56,16 @@ public class WishlistsController {
         }
 
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/wishlists/{id}/product/delete")
+    public ResponseEntity<Wishlist> deleteProductFromWishlist(@PathVariable Long id, @RequestBody WishlistRequest request) {
+        Wishlist wishlist = service.removeProduct(id, request);
+
+        if (null == wishlist) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(wishlist);
     }
 }
