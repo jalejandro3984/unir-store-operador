@@ -1,6 +1,7 @@
 package com.unir.store_core.model.db;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.unir.store_core.model.dto.ProductDto;
 import com.unir.store_core.model.request.ProductRequest;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,6 +44,13 @@ public class Product {
 
     @Column(name = "image")
     private String image;
+
+    public void update(ProductDto productDto) {
+        this.name = (null != productDto.getName()) ? productDto.getName() : this.name;
+        this.price = (null != productDto.getPrice()) ? productDto.getPrice() : this.price;
+        this.description = (null != productDto.getDescription()) ? productDto.getDescription() : this.description;
+        this.image = (null != productDto.getImage()) ? productDto.getImage() : this.image;
+    }
 
     public static Product fromRequest(ProductRequest request) {
         return Product.builder()

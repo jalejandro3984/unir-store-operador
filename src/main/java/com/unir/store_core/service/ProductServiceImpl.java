@@ -2,6 +2,7 @@ package com.unir.store_core.service;
 
 import com.unir.store_core.model.db.Category;
 import com.unir.store_core.model.db.Product;
+import com.unir.store_core.model.dto.ProductDto;
 import com.unir.store_core.model.request.ProductRequest;
 import com.unir.store_core.repository.CategoryJpaRepository;
 import com.unir.store_core.repository.ProductJpaRepository;
@@ -42,5 +43,14 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.delete(product);
         return Boolean.TRUE;
+    }
+
+    @Override
+    public Product updateProduct(Long id, ProductDto body) {
+        Product product = productRepository.getReferenceById(id);
+
+        product.update(body);
+
+        return productRepository.save(product);
     }
 }

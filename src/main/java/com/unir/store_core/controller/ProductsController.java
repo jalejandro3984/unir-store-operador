@@ -1,6 +1,7 @@
 package com.unir.store_core.controller;
 
 import com.unir.store_core.model.db.Product;
+import com.unir.store_core.model.dto.ProductDto;
 import com.unir.store_core.model.request.ProductRequest;
 import com.unir.store_core.repository.ProductJpaRepository;
 import com.unir.store_core.service.ProductService;
@@ -44,6 +45,17 @@ public class ProductsController {
         if (null == product) {
             return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.ok(product);
+    }
+
+    @PatchMapping("/products/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto body) {
+        if (!repository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Product product = service.updateProduct(id, body);
 
         return ResponseEntity.ok(product);
     }
