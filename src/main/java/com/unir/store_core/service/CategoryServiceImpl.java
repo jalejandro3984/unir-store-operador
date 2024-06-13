@@ -1,6 +1,7 @@
 package com.unir.store_core.service;
 
 import com.unir.store_core.model.db.Category;
+import com.unir.store_core.model.dto.CategoryDto;
 import com.unir.store_core.repository.CategoryJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +24,14 @@ public class CategoryServiceImpl implements CategoryService {
         repository.delete(category);
 
         return Boolean.TRUE;
+    }
+
+    @Override
+    public Category updateCategory(Long id, CategoryDto body) {
+        Category category = repository.getReferenceById(id);
+
+        category.update(body);
+
+        return repository.save(category);
     }
 }

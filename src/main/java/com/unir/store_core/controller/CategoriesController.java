@@ -1,6 +1,7 @@
 package com.unir.store_core.controller;
 
 import com.unir.store_core.model.db.Category;
+import com.unir.store_core.model.dto.CategoryDto;
 import com.unir.store_core.model.request.CategoryRequest;
 import com.unir.store_core.repository.CategoryJpaRepository;
 import com.unir.store_core.service.CategoryService;
@@ -39,6 +40,17 @@ public class CategoriesController {
         if (null == category) {
             return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.ok(category);
+    }
+
+    @PatchMapping("/categories/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody CategoryDto body) {
+        if (!repository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Category category = service.updateCategory(id, body);
 
         return ResponseEntity.ok(category);
     }
