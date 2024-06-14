@@ -29,6 +29,10 @@ eureka:
   instance:
     preferIpAddress: false # TRUE para uso local, false para trabajar con hostname
     hostname: ${HOSTNAME:ms-unir-store}
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    non-secure-port: 80
+    secure-port: 443
 
 jasypt:
   encryptor:
