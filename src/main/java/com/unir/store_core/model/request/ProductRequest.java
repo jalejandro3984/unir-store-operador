@@ -1,6 +1,7 @@
 package com.unir.store_core.model.request;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,10 @@ public class ProductRequest {
     @NotNull(message = "`price` cannot be null")
     @DecimalMin(value = "0.0", inclusive = false, message = "`price` must be greater than 0")
     private BigDecimal price;
+
+    @NotNull(message = "`visible` cannot be null")
+    @NotEmpty(message = "`visible` cannot be null")
+    private Boolean visible;
 
     @Null
     private String image;

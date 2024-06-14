@@ -26,6 +26,11 @@ public class Product {
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
+    @JsonBackReference
+    private Cart cart;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wishlist_id")
     @JsonBackReference
     private Wishlist wishlist;
@@ -45,6 +50,9 @@ public class Product {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "visible")
+    private Boolean visible;
+
     public void update(ProductDto productDto) {
         this.name = (null != productDto.getName()) ? productDto.getName() : this.name;
         this.price = (null != productDto.getPrice()) ? productDto.getPrice() : this.price;
@@ -58,6 +66,7 @@ public class Product {
                 .price(request.getPrice())
                 .description(request.getDescription())
                 .image(request.getImage())
+                .visible(request.getVisible())
                 .categoryId(request.getCategoryId())
                 .build();
     }
