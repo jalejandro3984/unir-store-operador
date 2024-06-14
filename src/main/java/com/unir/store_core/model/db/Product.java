@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -29,6 +30,9 @@ public class Product {
     @JoinColumn(name = "cart_id")
     @JsonBackReference
     private Cart cart;
+
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wishlist_id")
