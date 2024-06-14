@@ -6,7 +6,7 @@
 # Llamaremos a este sub-entorno "build"
 # Copiamos todo el contenido del repositorio
 # Ejecutamos el comando mvn clean package (Generara un archivo JAR para el despliegue)
-FROM maven:4.0.0-eclipse-temurin-21 AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 COPY . .
 RUN mvn clean package
 
