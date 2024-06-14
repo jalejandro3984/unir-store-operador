@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -19,12 +22,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(OrderRequest request) {
+        var user = userJpaRepository.findById(request.getUserId());
+        var product = productJpaRepository.findById(request.getProductId());
+
+        if (user.isEmpty()) {
+            return null;
+        }
+
+        if (product.isEmpty()) {
+            return null;
+        }
+
         Order order = new Order();
+        order.setUser(user.get());
+        order.setProducts(List.of(product.get()));
+
         return orderJpaRepository.save(order);
     }
 
     @Override
     public Boolean deleteOrder(Long id) {
-        return null;
+        if(!orderJpaRepository.existsById(id)) {
+            return Boolean.FALSE;
+        }
+
+        orderJpaRepository.deleteById(id);
+        return Boolean.TRUE;
     }
 }

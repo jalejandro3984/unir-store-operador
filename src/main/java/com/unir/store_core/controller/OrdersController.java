@@ -32,11 +32,13 @@ public class OrdersController {
     }
 
     @DeleteMapping("/orders/{id}")
-    public ResponseEntity<Boolean> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         Boolean result = service.deleteOrder(id);
+
         if (!result) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(result);
+
+        return ResponseEntity.noContent().build();
     }
 }
