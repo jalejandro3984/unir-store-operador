@@ -2,7 +2,6 @@ package com.unir.store_core.model.db;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.unir.store_core.model.request.OrderRequest;
 import jakarta.persistence.*;
 import lombok.*;
 

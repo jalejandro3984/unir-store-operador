@@ -3,15 +3,12 @@ package com.unir.store_core;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableEncryptableProperties
 public class StoreCoreApplication {
-
-	@LoadBalanced
 	@Bean
 	public RestTemplate restTemplate() { return new RestTemplate(); }
 
