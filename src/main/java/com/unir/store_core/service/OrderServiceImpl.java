@@ -4,40 +4,36 @@ import com.unir.store_core.model.db.Order;
 import com.unir.store_core.model.request.OrderRequest;
 import com.unir.store_core.repository.OrderJpaRepository;
 import com.unir.store_core.repository.ProductJpaRepository;
-import com.unir.store_core.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final ProductJpaRepository productJpaRepository;
+    private final ProductService productService;
     private final OrderJpaRepository orderJpaRepository;
-    private final UserJpaRepository userJpaRepository;
 
     @Override
     public Order createOrder(OrderRequest request) {
-        var user = userJpaRepository.findById(request.getUserId());
-        var product = productJpaRepository.findById(request.getProductId());
+        var product = productJpaRepository.findById(request.getProductId()).orElse(null);
 
-        if (user.isEmpty()) {
-            return null;
-        }
-
-        if (product.isEmpty()) {
+        if (null == product) {
             return null;
         }
 
         Order order = new Order();
-        order.setUser(user.get());
-        order.setProducts(List.of(product.get()));
+//        order.setProducts(List.of(product));
 
         return orderJpaRepository.save(order);
+
+//        try {
+//            orderJpaRepository.save(order);
+//        } catch (Exception e) {
+//
+//        }
     }
 
     @Override
