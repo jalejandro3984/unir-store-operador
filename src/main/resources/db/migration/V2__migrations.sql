@@ -26,3 +26,6 @@ INSERT INTO products (`category_id`, `name`, `description`, `price`, `image`, `q
 
 -- CARTS
 INSERT INTO carts (`created_at`, `updated_at`) VALUES (NOW(), NOW());
+
+-- WISHLIST
+INSERT INTO wishlists (`created_at`, `updated_at`) VALUES (NOW(), NOW());
