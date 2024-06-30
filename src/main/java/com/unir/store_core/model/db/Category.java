@@ -1,7 +1,6 @@
 package com.unir.store_core.model.db;
 
 import com.unir.store_core.model.dto.CategoryDto;
-import com.unir.store_core.model.dto.UserDto;
 import com.unir.store_core.model.request.CategoryRequest;
 import jakarta.persistence.*;
 import lombok.*;
