@@ -3,9 +3,7 @@ package com.unir.store_core.controller;
 import com.unir.store_core.model.db.Cart;
 import com.unir.store_core.model.request.CartRequest;
 import com.unir.store_core.repository.CartJpaRepository;
-import com.unir.store_core.repository.WishlistJpaRepository;
 import com.unir.store_core.service.CartService;
-import com.unir.store_core.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,25 +19,25 @@ public class CartsController {
     private final CartService service;
 
     @PostMapping("/carts")
-    public ResponseEntity<Cart> createWishlist(@RequestBody CartRequest request) {
+    public ResponseEntity<Cart> createCart(@RequestBody CartRequest request) {
         Cart cart = service.createCart(request);
         return ResponseEntity.ok(cart);
     }
 
-    @PostMapping("/carts/{id}/product/add")
-    public ResponseEntity<Cart> addProductToWishlist(@PathVariable Long id, @RequestBody CartRequest request) {
-        Cart cart = service.addProduct(id, request);
+    @PostMapping("/carts/add")
+    public ResponseEntity<Cart> addProductToCart(@RequestBody CartRequest request) {
+        Cart cart = service.addProduct(request);
         return ResponseEntity.ok(cart);
     }
 
     @GetMapping("/carts")
-    public ResponseEntity<List<Cart>> getAllWishlists() {
+    public ResponseEntity<List<Cart>> getAllCarts() {
         List<Cart> carts = repository.findAll();
         return ResponseEntity.ok(carts);
     }
 
     @GetMapping("/carts/{id}")
-    public ResponseEntity<Cart> getWishlist(@PathVariable Long id) {
+    public ResponseEntity<Cart> getCart(@PathVariable Long id) {
         Cart cart = repository.findById(id).orElse(null);
 
         if (null == cart) {
@@ -50,7 +48,7 @@ public class CartsController {
     }
 
     @DeleteMapping("/carts/{id}/delete")
-    public ResponseEntity<Void> deleteWishlist(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         Boolean removed = service.deleteCart(id);
 
         if (!removed) {
@@ -61,7 +59,7 @@ public class CartsController {
     }
 
     @DeleteMapping("/carts/{id}/product/delete")
-    public ResponseEntity<Cart> deleteProductFromWishlist(@PathVariable Long id, @RequestBody CartRequest request) {
+    public ResponseEntity<Cart> deleteProductFromCart(@PathVariable Long id, @RequestBody CartRequest request) {
         Cart cart = service.removeProduct(id, request);
 
         if (null == cart) {
