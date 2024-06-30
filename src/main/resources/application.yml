@@ -3,23 +3,26 @@ spring:
     name: ${APP_NAME:ms-unir-store}
   datasource:
     url: jdbc:h2:mem:unir_store_operador;Mode=MySQL
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-    defer-datasource-initialization: true
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    locations: classpath:db/migration
   h2:
     console:
       enabled: true
       path: /h2-console
       settings:
         web-allow-others: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
 
 server:
   port: ${PORT:8001}
   error:
     include-stacktrace: on_param
 
-jasypt:
-  encryptor:
-    password: this-is-a-secret-key
+logging:
+  level:
+    org.flywaydb: DEBUG
