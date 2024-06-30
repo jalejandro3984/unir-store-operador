@@ -2,6 +2,7 @@ package com.unir.store_core.model.dto;
 
 import lombok.*;
 
+import java.awt.*;
 import java.math.BigDecimal;
 
 @Getter

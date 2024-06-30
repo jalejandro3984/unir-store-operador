@@ -1,12 +1,13 @@
 package com.unir.store_core.model.db;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.store_core.model.dto.ProductDto;
 import com.unir.store_core.model.request.ProductRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,19 +27,11 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false, insertable = false, updatable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
-    @JsonBackReference
-    private Cart cart;
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wishlist_id")
-    @JsonBackReference
-    private Wishlist wishlist;
-
+    @JsonIgnore
     @Column(name = "category_id")
     private Long categoryId;
 
@@ -57,6 +50,9 @@ public class Product {
     @Column(name = "visible")
     private Boolean visible;
 
+    @Column(name = "qty")
+    private Integer qty;
+
     public void update(ProductDto productDto) {
         this.name = (null != productDto.getName()) ? productDto.getName() : this.name;
         this.price = (null != productDto.getPrice()) ? productDto.getPrice() : this.price;
@@ -71,6 +67,7 @@ public class Product {
                 .description(request.getDescription())
                 .image(request.getImage())
                 .visible(request.getVisible())
+                .qty(request.getQty())
                 .categoryId(request.getCategoryId())
                 .build();
     }
