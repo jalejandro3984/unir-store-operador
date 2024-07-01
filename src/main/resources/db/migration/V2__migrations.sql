@@ -1,8 +1,8 @@
 -- CATEGORIES
-INSERT INTO categories (`name`, `created_at`, `updated_at`) VALUES ('Electronics', NOW(), NOW());
-INSERT INTO categories (`name`, `created_at`, `updated_at`) VALUES ('Jewelery', NOW(), NOW());
-INSERT INTO categories (`name`, `created_at`, `updated_at`) VALUES ('Men''s clothing', NOW(), NOW());
-INSERT INTO categories (`name`, `created_at`, `updated_at`) VALUES ('Women''s clothing', NOW(), NOW());
+INSERT INTO categories (`name`, `image`, `created_at`, `updated_at`) VALUES ('electronics', 'https://picsum.photos/id/367/300/200' , NOW(), NOW());
+INSERT INTO categories (`name`, `image`, `created_at`, `updated_at`) VALUES ('jewelery', 'https://picsum.photos/id/26/300/200', NOW(), NOW());
+INSERT INTO categories (`name`, `image`, `created_at`, `updated_at`) VALUES ('men''s clothing', 'https://picsum.photos/id/604/300/200', NOW(), NOW());
+INSERT INTO categories (`name`, `image`, `created_at`, `updated_at`) VALUES ('women''s clothing', 'https://picsum.photos/id/325/300/200',NOW(), NOW());
 
 -- PRODUCTS: ELECTRONICS
 INSERT INTO products (`category_id`, `name`, `description`, `price`, `image`, `qty`, `visible`, `created_at`, `updated_at`) VALUES (1, 'WD 2TB Portable External Hard Drive', 'USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system', 64.50, 'https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg', 10, 1, NOW(), NOW());
