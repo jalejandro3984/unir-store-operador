@@ -21,6 +21,9 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "image")
+    private String image;
+
     public static Category fromRequest(CategoryRequest request) {
         return Category.builder()
                 .name(request.getName())
@@ -29,5 +32,6 @@ public class Category {
 
     public void update(CategoryDto categoryDto) {
         this.name = (null != categoryDto.getName()) ? categoryDto.getName() : this.name;
+        this.image = (null != categoryDto.getImage()) ? categoryDto.getImage() : this.image;
     }
 }

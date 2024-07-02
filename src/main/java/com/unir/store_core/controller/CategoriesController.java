@@ -1,10 +1,12 @@
 package com.unir.store_core.controller;
 
 import com.unir.store_core.model.db.Category;
+import com.unir.store_core.model.db.Product;
 import com.unir.store_core.model.dto.CategoryDto;
 import com.unir.store_core.model.request.CategoryRequest;
 import com.unir.store_core.repository.CategoryJpaRepository;
 import com.unir.store_core.service.CategoryService;
+import com.unir.store_core.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 public class CategoriesController {
     private final CategoryJpaRepository repository;
     private final CategoryService service;
+    private final ProductService productService;
 
     @PostMapping("/categories")
     public ResponseEntity<Category> createCategory(@RequestBody CategoryRequest request) {
@@ -42,6 +45,18 @@ public class CategoriesController {
         }
 
         return ResponseEntity.ok(category);
+    }
+
+    @GetMapping("/categories/{name}/products")
+    public ResponseEntity<List<Product>> getAllProductsByCategory(@PathVariable String name) {
+        Category category = repository.findByName(name);
+
+        if (null == category) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Product> products = productService.getAllProductsByCategoryId(category.getId());
+        return ResponseEntity.ok().body(products);
     }
 
     @PatchMapping("/categories/{id}")
