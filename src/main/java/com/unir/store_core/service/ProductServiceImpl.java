@@ -34,6 +34,22 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
+    // @Override
+    // public Product updateProduct(Long id, ProductRequest request) {
+    //     //TODO: buscar producto en el ms buscador, si el producto no existe, crearlo, si existe aumentar la cantidad.
+    //     Product producta = productRepository.getReferenceById(id);
+    //     Long categoryId = request.getCategoryId();
+    //     Category category = categoryRepository.findById(categoryId).orElse(null);
+
+    //     if (null == category) {
+    //         return null;
+    //     }
+
+    //     Product product = Product.fromRequest(request);
+
+    //     return productRepository.save(product);
+    // }
+
     @Override
     public Boolean removeProduct(Long id) {
         //TODO: Buscar producto en el buscador, validar cantidades, hacer una disminucion de la cantidad, si es igual a 0, volver no visible.

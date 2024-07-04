@@ -60,6 +60,19 @@ public class ProductsController {
         return ResponseEntity.ok(product);
     }
 
+    // @PutMapping("/products/{id}")
+    // public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest request) {
+        // Product product = service.updateProduct(id, request);
+
+        // if (null == product) {
+        //     return ResponseEntity
+        //             .badRequest()
+        //             .body("Failed to update the object. Please make sure the input is correct and try again.");
+        // }
+
+        // // return ResponseEntity.ok(product);
+    // }
+
     @DeleteMapping("/products/delete/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         Boolean removed = service.removeProduct(id);

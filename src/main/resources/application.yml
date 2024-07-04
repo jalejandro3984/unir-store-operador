@@ -27,12 +27,16 @@ logging:
   level:
     org.flywaydb: DEBUG
 
-# Configuración de eureka
+## Configuracion del cliente de Eureka
 eureka:
   client:
     service-url:
+      register-with-eureka: true
+      fetch-registry: false
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+      # defaultZone: http://localhost:8761/eureka
   instance:
-    preferIpAdress: true
-    hostname: operador
+    preferIpAddress: true
+    hostname: ms-unir-store
+
 
