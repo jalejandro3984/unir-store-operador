@@ -19,14 +19,16 @@ public class CartsController {
     private final CartService service;
 
     @PostMapping("/carts")
-    public ResponseEntity<Cart> createCart(@RequestBody CartRequest request) {
-        Cart cart = service.createCart(request);
+    public ResponseEntity<Cart> createCart() {
+        Cart cart = new Cart();
+        repository.save(cart);
+
         return ResponseEntity.ok(cart);
     }
 
-    @PostMapping("/carts/add")
-    public ResponseEntity<Cart> addProductToCart(@RequestBody CartRequest request) {
-        Cart cart = service.addProduct(request);
+    @PostMapping("/carts/{id}/products")
+    public ResponseEntity<Cart> addProductToCart(@PathVariable Long id, @RequestBody CartRequest request) {
+        Cart cart = service.addProduct(id, request);
         return ResponseEntity.ok(cart);
     }
 
@@ -47,7 +49,7 @@ public class CartsController {
         return ResponseEntity.ok(cart);
     }
 
-    @DeleteMapping("/carts/{id}/delete")
+    @DeleteMapping("/carts/{id}")
     public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
         Boolean removed = service.deleteCart(id);
 
@@ -58,13 +60,15 @@ public class CartsController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/carts/{id}/product/delete")
-    public ResponseEntity<Cart> deleteProductFromCart(@PathVariable Long id, @RequestBody CartRequest request) {
-        Cart cart = service.removeProduct(id, request);
+    @DeleteMapping("/carts/{id}/products")
+    public ResponseEntity<Cart> deleteProductFromCart(Long id, @RequestBody CartRequest request) {
+        Cart cart = repository.findById(id).orElse(null);
 
         if (null == cart) {
             return ResponseEntity.notFound().build();
         }
+
+        cart = service.removeProduct(id, request);
 
         return ResponseEntity.ok(cart);
     }

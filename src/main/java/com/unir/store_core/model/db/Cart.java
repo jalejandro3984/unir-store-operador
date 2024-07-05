@@ -22,6 +22,20 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems.clear();
+        if (cartItems != null) {
+            cartItems.forEach(cartItem -> {
+                addCartItem(cartItem);
+            });
+        }
+    }
+
+    public void addCartItem(CartItem cartItem) {
+        cartItems.add(cartItem);
+        cartItem.setCart(this);
+    }
 }

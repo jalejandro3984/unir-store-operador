@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "wishlists")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -19,12 +24,20 @@ public class Wishlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany(mappedBy = "wishlist", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JsonManagedReference
-//    private List<Product> products;
-//
-//    public void addProduct(Product product) {
-//        product.setWishlist(this);
-//        this.products.add(product);
-//    }
+    @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WishlistItem> wishlistItems = new ArrayList<>();
+
+    public void setWishlistItems(List<WishlistItem> wishlistItems) {
+        this.wishlistItems.clear();
+        if (wishlistItems != null) {
+            wishlistItems.forEach(wishlistItem -> {
+                addCartItem(wishlistItem);
+            });
+        }
+    }
+
+    public void addCartItem(WishlistItem wishlistItem) {
+        wishlistItems.add(wishlistItem);
+        wishlistItem.setWishlist(this);
+    }
 }

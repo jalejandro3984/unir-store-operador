@@ -4,6 +4,7 @@ import com.unir.store_core.model.db.Cart;
 import com.unir.store_core.model.db.CartItem;
 import com.unir.store_core.model.db.Product;
 import com.unir.store_core.model.request.CartRequest;
+import com.unir.store_core.repository.CartItemJpaRepository;
 import com.unir.store_core.repository.CartJpaRepository;
 import com.unir.store_core.repository.ProductJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +16,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
     private final CartJpaRepository cartJpaRepository;
+    private final CartItemJpaRepository cartItemJpaRepository;
     private final ProductJpaRepository productJpaRepository;
-
-    @Override
-    public Cart createCart(CartRequest request) {
-        Cart cart = new Cart();
-
-        return cartJpaRepository.save(cart);
-    }
 
     @Override
     public Boolean deleteCart(Long id) {
@@ -37,8 +32,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart addProduct(CartRequest request) {
-        Cart cart = cartJpaRepository.findById(request.getCartId()).orElse(null);
+    public Cart addProduct(Long id, CartRequest request) {
+        Cart cart = cartJpaRepository.findById(id).orElse(null);
 
         if (null == cart) {
             return null;
@@ -57,11 +52,12 @@ public class CartServiceImpl implements CartService {
                     CartItem newItem = new CartItem();
                     newItem.setCart(cart);
                     newItem.setProduct(product);
+                    newItem.setQty(0);
                     cart.getCartItems().add(newItem);
                     return newItem;
                 });
 
-        cartItem.setQty(request.getQty());
+        cartItem.setQty(cartItem.getQty() + request.getQty());
 
         cartJpaRepository.save(cart);
 
@@ -72,17 +68,20 @@ public class CartServiceImpl implements CartService {
     public Cart removeProduct(Long id, CartRequest request) {
         Cart cart = cartJpaRepository.findById(id).orElse(null);
 
-        if (null == cart) {
-            return null;
+        CartItem cartItemToRemove = cart.getCartItems().stream()
+                .filter(cartItem -> cartItem.getProduct().getId().equals(request.getProductId()))
+                .findFirst()
+                .orElse(null);
+
+        if (null == cartItemToRemove) {
+            return cart;
         }
 
-        Product product = productJpaRepository.findById(request.getProductId()).orElse(null);
+        cart.getCartItems().remove(cartItemToRemove);
+        cartItemToRemove.setCart(null);
 
-        if (null == product) {
-            return null;
-        }
-
-        productJpaRepository.save(product);
+        cartJpaRepository.save(cart);
+        cartItemJpaRepository.delete(cartItemToRemove);
 
         return cart;
     }
