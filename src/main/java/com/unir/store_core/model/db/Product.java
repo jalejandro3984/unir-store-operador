@@ -1,5 +1,6 @@
 package com.unir.store_core.model.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.store_core.model.dto.ProductDto;
 import com.unir.store_core.model.request.ProductRequest;
@@ -30,6 +31,10 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems = new ArrayList<>();
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @JsonIgnore
     @Column(name = "category_id")

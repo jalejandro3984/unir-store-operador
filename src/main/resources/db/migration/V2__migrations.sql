@@ -30,6 +30,9 @@ INSERT INTO carts (`created_at`, `updated_at`) VALUES (NOW(), NOW());
 -- WISHLIST
 INSERT INTO wishlists (`created_at`, `updated_at`) VALUES (NOW(), NOW());
 
+-- ORDER
+INSERT INTO orders (`status`, `total_price`, `shipping_address`, `billing_address`, `payment_method`, `created_at`, `updated_at`) VALUES ('Pending', 0.0, '<p>Calle de García Martín, 21</p><p>Pozuelo de Alarcón, 28224</p><p>Madrid, España.</p>', '<p>Calle de García Martín, 21</p><p>Pozuelo de Alarcón, 28224</p><p>Madrid, España.</p>', 'Paying with cash', NOW(), NOW());
+
 -- LLENADO DE LA TABLA
 INSERT INTO products (`category_id`, `name`, `description`, `price`, `image`, `qty`, `visible`, `created_at`, `updated_at`) VALUES 
 (1, 'Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor', '49 INCH 32:9 UltraWide Full HD 1080p - Dual Monitor Experience', 999.99, 'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg', 5, 1, NOW(), NOW()),

@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `shipping_address` VARCHAR(255),
   `billing_address` VARCHAR(255),
   `payment_method` VARCHAR(255),
-  `payment_status` VARCHAR(255),
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -58,5 +57,14 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
   `product_id` INT NOT NULL,
   `qty` INT,
   FOREIGN KEY (`cart_id`) REFERENCES `carts`(`id`),
+  FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `order_items` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `order_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `qty` INT,
+  FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`),
   FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
 );
