@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -39,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
             item.setProduct(product);
             item.setQty(request.getQty());
             order.getItems().add(item);
+
+            Float itemTotalPrice = product.getPrice().multiply(new BigDecimal(item.getQty())).floatValue();
+            order.setTotalPrice(order.getTotalPrice() + itemTotalPrice);
         }
 
         orderJpaRepository.save(order);
@@ -57,6 +61,8 @@ public class OrderServiceImpl implements OrderService {
 
         order.getItems().remove(item);
 
+        order.setTotalPrice(order.getTotalPrice() - item.getProduct().getPrice().multiply(new BigDecimal(item.getQty())).floatValue());
+
         orderJpaRepository.save(order);
 
         return order;
@@ -71,7 +77,10 @@ public class OrderServiceImpl implements OrderService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Product not found in the order.")); // Usa tu propia excepción personalizada
 
+        int qtyDifference = quantity - item.getQty();
         item.setQty(quantity);
+
+        order.setTotalPrice(order.getTotalPrice() + item.getProduct().getPrice().multiply(new BigDecimal(qtyDifference)).floatValue());
 
         orderJpaRepository.save(order);
 
